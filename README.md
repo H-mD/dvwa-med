@@ -51,26 +51,23 @@ Cara:
 ## SQL INJECTION (BLIND)
 
 ### Serangan di DVWA dengan security level medium
-
-> Task: sama seperti pada serangan low
-
 1. Ubah difficulty serangan menjadi medium pada tab `DVWA Security`
 
-![change diff](src/diff_blind.png)
+![change diff](src/blind_diff.png)
 
 2. Buka tab `SQL Injection (Blind)` kemudian inspect, pilih tab network, lalu klik submit
 
-![network](src/network_blind.png)
+![network](src/blind_network.png)
 
 3. Pilih data teratas dan catat cookies dan raw requestnya
 >Pilih tab `Cookies` pada bagian bawah untuk melihat cookies yang ada
->![cookies](src/cookies_blind.png)
+>![cookies](src/blind_cookies.png)
 
 >Pilih tab `Request` pada bagian bawah lalu tekan togle `Raw` untuk melihat raw request yang dikirimkan
->![request](src/request_blind.png)
+>![request](src/blind_request.png)
 
 >catat dengan format yang sesuai pada gambar dibawah
->![note](src/note_blind.png)
+>![note](src/blind_note.png)
 
 4. Buka terminal dan jalankan command sqlmap berikut:
 ```
@@ -84,7 +81,7 @@ sqlmap -u "[url]" --cookie="[cookies]" --data="[request]" --dbms --batch
 >
 >`[request]` = raw request yang telah dicatat sesuai format 
 
-![sqlmap1](src/sqlmap1_blind.png)
+![sqlmap1](src/blind_sqlmap1.png)
 Didapatkan daftar database yang ada pada server
 ```
 [*] dvwa
@@ -97,7 +94,7 @@ sqlmap -u "[url]" --cookie="[cookies]" --data="[request]" -D dvwa --tables --bat
 ```
 >command di atas akan menampilkan tabel yang ada dalam database dvwa
 
-![sqlmap2](src/sqlmap2_blind.png)
+![sqlmap2](src/blind_sqlmap2.png)
 
 6. Ubah lagi command sqlmap sebelumnya untuk menampilkan data dalam tabel users
 ```
@@ -105,5 +102,5 @@ sqlmap -u "[url]" --cookie="[cookies]" --data="[request]" -D dvwa -T users --dum
 ```
 >--dump digunakan untuk menampilkan semua data didalam sebuah tabel
 
-![sqlmap3](src/sqlmap3_blind.png)
+![sqlmap3](src/blind_sqlmap3.png)
 >karena enkripsi password yang sederhana menggunakan `md5`, sqlmap secara otomatis mendekripsi semua password yang ada
